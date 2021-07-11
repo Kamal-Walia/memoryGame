@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Text, TouchableOpacity} from 'react-native';
+import {View, Text, TouchableOpacity, Alert} from 'react-native';
 
 import styles from './gameScreen-styles';
 
@@ -65,7 +65,15 @@ class GameScreen extends React.Component {
           ...this.state.tempVisibleCards,
           ...this.state.visibleCards,
         ];
-        this.setState({visibleCards: updatedCards, tempVisibleCards: []});
+        this.setState({visibleCards: updatedCards, tempVisibleCards: []}, () => {
+          if(this.state.visibleCards.length === 16){
+            Alert.alert('Hurray', 'You Win', [ 
+          { text: 'Okay',
+              onPress: () => {
+                  this.resetGame()
+              } },])
+          }
+        });
       } else {
         setTimeout(() => {
           this.setState({tempVisibleCards: []});
